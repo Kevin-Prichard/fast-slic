@@ -151,8 +151,10 @@ namespace fslic {
 
                         uint64_t dist_4, assignment_4;
                         if (rem >= 4) {
-                            *(uint64_t *)&min_dist_base_row[j] = _mm_extract_epi64(new_min_dist__narrow, 0);
-                            *(uint64_t *)&assignment_base_row[j] = _mm_extract_epi64(new_assignment__narrow, 0);
+                            dist_4 = (uint64_t)_mm_extract_epi64(new_min_dist__narrow, 0);
+                            assignment_4 = (uint64_t)_mm_extract_epi64(new_assignment__narrow, 0);
+                            memcpy(&min_dist_base_row[j], &dist_4, sizeof(dist_4));
+                            memcpy(&assignment_base_row[j], &assignment_4, sizeof(assignment_4));
                             rem -= 4;
                             j += 4;
                             dist_4 = _mm_extract_epi64(new_min_dist__narrow, 1);
@@ -164,18 +166,32 @@ namespace fslic {
 
                         switch (rem) {
                         case 3:
-                            *(uint32_t *)&min_dist_base_row[j] = (uint32_t)dist_4;
-                            *(uint32_t *)&assignment_base_row[j] = (uint32_t)assignment_4;
-                            *(uint16_t *)&min_dist_base_row[j + 2] = (uint16_t)(dist_4 >> 32);
-                            *(uint16_t *)&assignment_base_row[j + 2] = (uint16_t)(assignment_4 >> 32);
+                            {
+                                uint32_t dist_3 = (uint32_t)dist_4;
+                                uint32_t assignment_3 = (uint32_t)assignment_4;
+                                uint16_t dist_1 = (uint16_t)(dist_4 >> 32);
+                                uint16_t assignment_1 = (uint16_t)(assignment_4 >> 32);
+                                memcpy(&min_dist_base_row[j], &dist_3, sizeof(dist_3));
+                                memcpy(&assignment_base_row[j], &assignment_3, sizeof(assignment_3));
+                                memcpy(&min_dist_base_row[j + 2], &dist_1, sizeof(dist_1));
+                                memcpy(&assignment_base_row[j + 2], &assignment_1, sizeof(assignment_1));
+                            }
                             break;
                         case 2:
-                            *(uint32_t *)&min_dist_base_row[j] = (uint32_t)dist_4;
-                            *(uint32_t *)&assignment_base_row[j] = (uint32_t)assignment_4;
+                            {
+                                uint32_t dist_2 = (uint32_t)dist_4;
+                                uint32_t assignment_2 = (uint32_t)assignment_4;
+                                memcpy(&min_dist_base_row[j], &dist_2, sizeof(dist_2));
+                                memcpy(&assignment_base_row[j], &assignment_2, sizeof(assignment_2));
+                            }
                             break;
                         case 1:
-                            *(uint16_t *)&min_dist_base_row[j] = (uint16_t)dist_4;
-                            *(uint16_t *)&assignment_base_row[j] = (uint16_t)assignment_4;
+                            {
+                                uint16_t dist_1 = (uint16_t)dist_4;
+                                uint16_t assignment_1 = (uint16_t)assignment_4;
+                                memcpy(&min_dist_base_row[j], &dist_1, sizeof(dist_1));
+                                memcpy(&assignment_base_row[j], &assignment_1, sizeof(assignment_1));
+                            }
                             break;
                         }
                     }
