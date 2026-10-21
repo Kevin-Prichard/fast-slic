@@ -2,6 +2,7 @@
 #define _SIMD_HELPER_HPP
 #include <cstdlib>
 #include <algorithm>
+#include <cstring>
 
 
 #ifdef _MSC_VER

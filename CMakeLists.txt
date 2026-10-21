@@ -17,5 +17,6 @@ if(OPENMP_FOUND)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
-add_executable(run_tests src/cca.cpp src/cpptest/main.cpp src/cpptest/test_cca.cpp src/cpptest/test_cielab.cpp)
+add_executable(run_tests src/cca.cpp src/parallel.cpp src/timer.cpp src/cpptest/main.cpp src/cpptest/test_cca.cpp src/cpptest/test_cielab.cpp)
 target_link_libraries(run_tests ${GTEST_LIBRARIES} pthread)
+add_test(NAME run_tests COMMAND run_tests)

@@ -173,3 +173,11 @@ prof/
 [._]*.un~
 
 *.dSYM/
+CMakeFiles/**
+.cmake/**
+CMakeCache.txt
+Makefile
+cmake-build-debug/**
+
+CTestTestfile.cmake
+cmake_install.cmake
