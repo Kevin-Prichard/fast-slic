@@ -181,3 +181,4 @@ cmake-build-debug/**
 
 CTestTestfile.cmake
 cmake_install.cmake
+run_tests
